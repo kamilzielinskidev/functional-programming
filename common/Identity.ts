@@ -1,15 +1,15 @@
 import { LambaFn } from "./common";
 
-type Identity<T> = {
-  emit: () => T;
-  map: <R>(fn: LambaFn<T, R>) => Identity<R>;
-  chain: <R>(fn: LambaFn<T, R>) => R;
+export type Identity<Value> = {
+  emit: () => Value;
+  map: <Result>(fn: LambaFn<Value, Result>) => Identity<Result>;
+  chain: <Result>(fn: LambaFn<Value, Result>) => Result;
 };
 
-type IdentityM = <T>(x: T) => Identity<T>;
+type IdentityM = <Value>(val: Value) => Identity<Value>;
 
-const Identity: IdentityM = (x) => ({
-  emit: () => x,
-  map: (fn) => Identity(fn(x)),
-  chain: (fn) => fn(x),
+export const Identity: IdentityM = (val) => ({
+  emit: () => val,
+  map: (fn) => Identity(fn(val)),
+  chain: (fn) => fn(val),
 });
