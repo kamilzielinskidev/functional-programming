@@ -4,7 +4,7 @@ const plus2 = (x: number) => x + 2;
 
 const identityProperties = ["tag", "emit", "map", "chain"];
 
-describe("create the identity monad", () => {
+describe("create the Identity monad", () => {
   const identity = Identity(1);
 
   test(`create object with ${identityProperties.join(", ")} properties`, () => {
@@ -21,6 +21,7 @@ describe("create the identity monad", () => {
     expect(identity.emit()).toBe(1);
   });
 
+  // TODO: improve these tests adding describe section
   test("map method should return another Identity with mapped value", () => {
     const identityPlus2 = identity.map(plus2);
     expect(identityPlus2.tag).toBe("Identity");
