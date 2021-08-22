@@ -1,5 +1,6 @@
 import { Identity } from "../Monads/Identity";
-// import { Maybe } from "../common/Maybe";
+import { Maybe } from "../Monads/Maybe";
+import { MaybeT } from "../Monads/MaybeT";
 
 // IDENTITY
 // this is a copy paste from the tutorial
@@ -10,17 +11,14 @@ export const getPercentRatio = (wrongCount: number, correctCount: number) =>
     .map(ratio => Math.round(100 * ratio))
     .map(v => `${v}%`);
 
-// TODO:
+export type User = { id: string; name: string };
+
 // MAYBE
+// this is wrapped in function maybe example from tutorial
+export const getUserID = (user: MaybeT<User>) => user.map(({ id }) => id);
 
-// let maybeUser = Some({ id: "3asd4asd", name: "James" });
-// maybeUser.map(user => user.id); // => Some("3asd4asd")
-// maybeUser.filter(user => user.name === "John"); // => None
+export const filterUserIfKamil = (user: MaybeT<User>) =>
+  user.filter(({ name }) => name === "Kamil");
 
-// const maybeUser = Maybe({ id: "3asd4asd", name: "James" });
-// console.log(maybeUser.map((user) => user.id).emit());
-// console.log(maybeUser.filter((user) => user.name === "John").emit());
-
-// const notUser = Maybe(null);
-// console.log(notUser.map((user) => user.id).emit());
-// console.log(notUser.filter((user) => user.name === "John").emit());
+export const getUserOrElse = (user: MaybeT<User>) =>
+  user.orElse({ id: "elseID", name: "elseName" });

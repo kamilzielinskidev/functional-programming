@@ -13,8 +13,6 @@ const maybeMonadValue = { name: "Kamil" };
 
 const orElseValue = { name: "NotKamil" };
 
-const doubledNameProp = `${maybeMonadValue.name}${maybeMonadValue.name}`;
-
 describe("create the Maybe monad with value", () => {
   const maybe = Maybe(maybeMonadValue);
 
@@ -60,7 +58,7 @@ describe("create the Maybe monad with value", () => {
 
   describe("filter with negative predicate, emit it", () => {
     const negativeFilteredValue = maybe
-      .filter(x => x.name === "NotKamil")
+      .filter(({ name }) => name === "NotKamil")
       .emit();
 
     test("should return Monad with null value", () => {
@@ -78,7 +76,7 @@ describe("create the Maybe monad with value", () => {
 
   describe("map value to null, use orElse with other value, emit it", () => {
     const nullOrElsedValue = maybe
-      .map(x => null)
+      .map(_ => null)
       .orElse(orElseValue)
       .emit();
 
