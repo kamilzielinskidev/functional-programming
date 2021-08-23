@@ -1,5 +1,6 @@
 import {
   filterUserIfKamil,
+  getGreeting,
   getPercentRatio,
   getUserID,
   getUserOrElse,
@@ -64,4 +65,12 @@ describe("fetch null user", () => {
       expect(elseUserID).toBe("elseID");
     });
   });
+});
+
+test("getGreeting method with null maybe argument should return 'Hi Guest!'", () => {
+  expect(getGreeting(Maybe(null)).emit()).toBe("Hi Guest!");
+});
+
+test("getGreeting method with 'Kamil' maybe argument should return 'Welcome back Kamil!'", () => {
+  expect(getGreeting(Maybe("Kamil")).emit()).toBe("Welcome back Kamil!");
 });

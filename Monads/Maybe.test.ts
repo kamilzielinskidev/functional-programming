@@ -74,14 +74,41 @@ describe("create the Maybe monad with value", () => {
     });
   });
 
-  describe("map value to null, use orElse with other value, emit it", () => {
-    const nullOrElsedValue = maybe
-      .map(_ => null)
-      .orElse(orElseValue)
+  describe("use cata with orElse as first argument and identity as second argument, emit it", () => {
+    const cataValue = maybe
+      .cata(
+        () => orElseValue,
+        val => val
+      )
       .emit();
+
+    test("should return same value", () => {
+      expect(cataValue).toEqual(maybeMonadValue);
+    });
+  });
+});
+
+describe("create the Maybe monad with no value", () => {
+  const maybe = Maybe(null);
+
+  describe("use orElse with other value, emit it", () => {
+    const nullOrElsedValue = maybe.orElse(orElseValue).emit();
 
     test("should return the else value", () => {
       expect(nullOrElsedValue).toEqual(orElseValue);
+    });
+  });
+
+  describe("use cata with orElse as first argument and identity as second argument, emit it", () => {
+    const cataValue = maybe
+      .cata(
+        () => orElseValue,
+        val => val
+      )
+      .emit();
+
+    test("should return orElse value", () => {
+      expect(cataValue).toEqual(orElseValue);
     });
   });
 });

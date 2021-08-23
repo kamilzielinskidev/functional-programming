@@ -10,4 +10,6 @@ export const Maybe: MaybeM = val => ({
   filter: predicate =>
     isNullable(val) || !predicate(val) ? Maybe(null) : Maybe(val),
   orElse: elseVal => (isNullable(val) ? Maybe(elseVal) : Maybe(val)),
+  cata: (noneFn, someFn) =>
+    isNullable(val) ? Maybe(noneFn()) : Maybe(someFn(val)),
 });

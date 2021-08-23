@@ -22,3 +22,9 @@ export const filterUserIfKamil = (user: MaybeT<User>) =>
 
 export const getUserOrElse = (user: MaybeT<User>) =>
   user.orElse({ id: "elseID", name: "elseName" });
+
+export const getGreeting = (nameOption: MaybeT<string>) =>
+  nameOption.cata(
+    () => "Hi Guest!",
+    name => "Welcome back " + name + "!"
+  );
